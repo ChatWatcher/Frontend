@@ -37,18 +37,20 @@ function Forms() {
           // fetch this url
           const response = await axios.get(url);
           const VODID = response.data[0].VOD;
-          // get stream type
-          const streamType = 'Reddit';
 
+          let StreamType = "";
+          // check if streamLink has twitch in it
           if (streamLink.includes('twitch')) {
-            streamType = 'Twitch';
-          } else if (streamLink.includes('youtube')) {
-            streamType = 'Youtube';
+            let StreamType = 'twitch';
+          }
+          if (streamLink.includes("youtube")) {
+            let StreamType = 'youtube';
+          }
+          if (streamLink.includes("reddit")) {
+            let StreamType = 'reddit';
           }
 
-          console.log(streamType);
-
-          window.location.href = '/' + VODID + '/' + streamType;
+          window.location.href = '/' + VODID + '/' + StreamType;
         }}
       >
         <Form style={{ height: 1000, margin: 10 }}>
