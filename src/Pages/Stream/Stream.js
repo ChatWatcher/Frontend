@@ -34,17 +34,15 @@ class Stream extends React.Component {
         .then((res) => res.json())
         .then((data) => {
           this.Stream.data = data;
-          this.Stream.data.streamerThumbnail =this.Stream.data.streamerThumbnail.replace("%{width}x%{height}", "1280x720");
           this.forceUpdate();
         });
     }
     if (Type == "reddit") {
-      const url = "https://www.reddit.com/rpan/r/RedditSessions/" + ID + '&format=json';
+      const url = "https://streamalyzer.herokuapp.com/stats/?VOD=" + "https://www.reddit.com/rpan/r/RedditSessions/" + ID + '&format=json';
       fetch(url)
         .then((res) => res.json())
         .then((data) => {
           this.Stream.data = data;
-          this.Stream.data.streamerThumbnail =this.Stream.data.streamerThumbnail.replace("%{width}x%{height}", "1280x720");
           this.forceUpdate();
         });
     }
