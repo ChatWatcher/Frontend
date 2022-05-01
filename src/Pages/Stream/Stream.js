@@ -23,8 +23,7 @@ class Stream extends React.Component {
         .then((res) => res.json())
         .then((data) => {
           this.Stream.data = data[0];
-          console.log(getCurrentUrl());
-          console.log(data);
+          this.Stream.data.streamerThumbnail =this.Stream.data.streamerThumbnail.replace("%{width}x%{height}", "1280x720");
           this.forceUpdate();
         });
       localStorage.setItem("appState", JSON.stringify(this.state));
@@ -35,8 +34,7 @@ class Stream extends React.Component {
         .then((res) => res.json())
         .then((data) => {
           this.Stream.data = data;
-          console.log(getCurrentUrl());
-          console.log(data);
+          this.Stream.data.streamerThumbnail =this.Stream.data.streamerThumbnail.replace("%{width}x%{height}", "1280x720");
           this.forceUpdate();
         });
     }
@@ -46,8 +44,7 @@ class Stream extends React.Component {
         .then((res) => res.json())
         .then((data) => {
           this.Stream.data = data;
-          console.log(getCurrentUrl());
-          console.log(data);
+          this.Stream.data.streamerThumbnail =this.Stream.data.streamerThumbnail.replace("%{width}x%{height}", "1280x720");
           this.forceUpdate();
         });
     }
