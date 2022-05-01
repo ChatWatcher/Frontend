@@ -11,6 +11,7 @@ import {
 } from '@chakra-ui/react';
 import Navbar from './Components/Navbar/Navbar';
 import Simple from './Pages/Landing/Landing';
+import Stream from './Pages/Stream/Stream';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
 function App() {
@@ -19,9 +20,8 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          {/* if there on / redirect them to home*/}
           <Route path="/" element={<Simple />} />
-          <Route path="/Home" element={<Simple />} />
+          <Route path="/:id/:Type" element={<Stream />} />
         </Routes>
       </BrowserRouter>
     </ChakraProvider>
