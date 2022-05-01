@@ -3,17 +3,6 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import './Stream.css';
 
-var dict = {
-  VOD: '',
-  streamerName: '',
-  positiveComments: 0,
-  negativeComments: 0,
-  neutralComments: 0,
-  streamerThumbnail: '',
-  mostCommonWord: '',
-  mostPositiveUser: '',
-  mostNegativeUser: '',
-};
 
 function getCurrentUrl(n) {
   let url = window.location.href;
@@ -21,66 +10,85 @@ function getCurrentUrl(n) {
   return urlArray[n];
 }
 
-function Stream() {
-  console.log(getCurrentUrl());
-  const ID = getCurrentUrl(3);
-  const Type = getCurrentUrl(4);
-  if (Type == "twitch") {
-    const url = "https://streamalyzer.herokuapp.com/stats/?VOD=" + "https://www.twitch.tv/videos/" + ID + '&format=json';
-    axios.get(url).then(response => {
-      console.log(response);
-      // set dict to response
-      dict = response.data[0];
-      console.log(dict);
+class Stream extends React.Component {
+  Stream = {
+    data: [],
+  };
+  componentDidMount() {
+    const ID = getCurrentUrl(3);
+    const Type = getCurrentUrl(4);
+    if (Type == "twitch") {
+      const url = "https://streamalyzer.herokuapp.com/stats/?VOD=" + "https://www.twitch.tv/videos/" + ID + '&format=json';
+      fetch(url)
+        .then((res) => res.json())
+        .then((data) => {
+          this.Stream.data = data[0];
+          console.log(getCurrentUrl());
+          console.log(data);
+          this.forceUpdate();
+        });
+      localStorage.setItem("appState", JSON.stringify(this.state));
+    }
+    if (Type == "youtube") {
+      const url = "https://streamalyzer.herokuapp.com/stats/?VOD=" + "https://www.youtube.com/watch?v=" + ID + '&format=json';
+      fetch(url)
+        .then((res) => res.json())
+        .then((data) => {
+          this.Stream.data = data;
+          console.log(getCurrentUrl());
+          console.log(data);
+          this.forceUpdate();
+        });
+    }
+    if (Type == "reddit") {
+      const url = "https://www.reddit.com/rpan/r/RedditSessions/" + ID + '&format=json';
+      fetch(url)
+        .then((res) => res.json())
+        .then((data) => {
+          this.Stream.data = data;
+          console.log(getCurrentUrl());
+          console.log(data);
+          this.forceUpdate();
+        });
+    }
+  }
 
-    });
-  }
-  if (Type == "youtube") {
-    const url = "https://streamalyzer.herokuapp.com/stats/?VOD=" + "https://www.youtube.com/watch?v=" + ID + '&format=json';
-    axios.get(url).then(response => {
-      console.log(response);
-    });
-  }
-  if(Type == "reddit") {
-    const url = "https://www.reddit.com/rpan/r/RedditSessions/" + ID + '&format=json';
-    axios.get(url).then(response => {
-      console.log(response);
-    });
-  }
+  render() {
+    return (
 
-  return (
       <div>
         <div className="Full">
           <div className="Left Column">
-            <div className="stream-Info">Streamer Name: {dict.streamerName}</div>
+            <div className="stream-Info">Streamer Name: {this.Stream.data.streamerName}</div>
             <div className="stream-Thumbnail">
-              <img src={dict.streamerThumbnail}></img>
+              <img src={this.Stream.data.streamerThumbnail}></img>
             </div>
           </div>
 
           <div className="Right Column">
             <div className="stream-InfoR">
-              Positive Comments: {dict.positiveComments}
+              Positive Comments: {this.Stream.data.ositiveComments}
             </div>
             <div className="stream-InfoR">
-              Negative Comments: {dict.negativeComments}
+              Negative Comments: {this.Stream.data.negativeComments}
             </div>
             <div className="stream-InfoR">
-              Neutral Comments: {dict.neutralComments}
+              Neutral Comments: {this.Stream.data.neutralComments}
             </div>
             <div className="stream-InfoR">
-              Most Common Word: {dict.mostCommonWord}
+              Most Common Word: {this.Stream.data.mostCommonWord}
             </div>
             <div className="stream-InfoR">
-              Most Positive User: {dict.mostPositiveUser}
+              Most Positive User: {this.Stream.data.mostPositiveUser}
             </div>
             <div className="stream-InfoR">
-              Most Negative User: {dict.mostNegativeUser}
+              Most Negative User: {this.Stream.data.mostNegativeUser}
             </div>
           </div>
         </div>
       </div>
-    );
+    )
+  }
 }
 
 export default Stream;

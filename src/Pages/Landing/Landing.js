@@ -41,13 +41,16 @@ function Forms() {
           let StreamType = "";
           // check if streamLink has twitch in it
           if (streamLink.includes('twitch')) {
-            let StreamType = 'twitch';
+            StreamType = 'twitch';
+            console.log("HEYY")
           }
-          if (streamLink.includes("youtube")) {
-            let StreamType = 'youtube';
+          else if (streamLink.includes("youtube")) {
+            StreamType = 'youtube';
+            console.log("HEYY");
           }
-          if (streamLink.includes("reddit")) {
-            let StreamType = 'reddit';
+          else if (streamLink.includes("reddit")) {
+            StreamType = 'reddit';
+            console.log("HEYY")
           }
 
           window.location.href = '/' + VODID + '/' + StreamType;
