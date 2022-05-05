@@ -33,18 +33,20 @@ class Stream extends React.Component {
       fetch(url)
         .then((res) => res.json())
         .then((data) => {
-          this.Stream.data = data;
+          this.Stream.data = data[0];
           this.forceUpdate();
         });
+        localStorage.setItem("appState", JSON.stringify(this.state));
     }
     if (Type == "reddit") {
       const url = "https://streamalyzer.herokuapp.com/stats/?VOD=" + "https://www.reddit.com/rpan/r/RedditSessions/" + ID + '&format=json';
       fetch(url)
         .then((res) => res.json())
         .then((data) => {
-          this.Stream.data = data;
+          this.Stream.data = data[0];
           this.forceUpdate();
         });
+        localStorage.setItem("appState", JSON.stringify(this.state));
     }
   }
 
@@ -62,7 +64,7 @@ class Stream extends React.Component {
 
           <div className="Right Column">
             <div className="stream-InfoR">
-              Positive Comments: {this.Stream.data.ositiveComments}
+              Positive Comments: {this.Stream.data.positiveComments}
             </div>
             <div className="stream-InfoR">
               Negative Comments: {this.Stream.data.negativeComments}
